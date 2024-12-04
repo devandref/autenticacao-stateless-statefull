@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  statefull-auth-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: auth-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - auth  
+    ports:
+      - "5432:5432"  
+
+  stateless-auth-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: auth-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - auth    
+    ports:
+      - "5433:5432"      
+
+  token-redis:
+    image: redis:latest
+    networks:
+      - auth    
+    ports:
+      - "6379:6379"    
+
+networks:
+  auth:
+    driver: bridge
